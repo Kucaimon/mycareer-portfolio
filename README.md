@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# mycareer.az — portfolio (demo)
 
-## Getting Started
+Учебный проект по мотивам ТЗ доски вакансий для Азербайджана: **AZ / RU**, тёмный современный UI, статические мок-данные (без бэкенда и парсинга).
 
-First, run the development server:
+## Запуск
+
+Сервер **должен быть запущен** в терминале — иначе в браузере будет `ERR_CONNECTION_REFUSED`.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Откройте [http://localhost:3000](http://localhost:3000) — редирект на `/az`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Скрипт `dev` использует **webpack** (а не Turbopack): так надёжнее с динамическим `[locale]` на некоторых машинах. Если в логах видите `EMFILE: too many open files`, увеличьте лимит, например: `ulimit -n 10240`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Сборка:
 
-## Learn More
+```bash
+npm run build && npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+Опционально скопируйте `.env.example` в `.env.local` и задайте `NEXT_PUBLIC_SITE_URL` для канонических ссылок и «Поделиться».
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Что внутри
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Главная: hero, слоты баннеров (плейсхолдеры), статистика за неделю, VIP / последние вакансии и CV, блок статей.
+- `/az/jobs`, `/ru/jobs` — список с фильтром (поиск, категория, диапазон дат, чекбокс «неделя»). Сортировка: **VIP → поднятые → дата**.
+- Карточка вакансии: SEO URL `/[locale]/jobs/[slug]`, лайк (localStorage), шаринг, блок карты с **выключателем** (без тяжёлого SDK).
+- Резюме: аналогично для `/resumes` и `/resumes/[slug]`.
+- `robots.txt`, `sitemap.xml`.
 
-## Deploy on Vercel
+Стек: **Next.js 16** (App Router), **Tailwind CSS v4**, TypeScript.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Важно для портфолио
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Это демонстрация интерфейса и структуры, не коммерческий продукт. Данные вымышленные.
